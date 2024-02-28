@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.navigation.NavHostController
 import com.antares.bookingmovie.R
+import com.antares.bookingmovie.core.route.AppRouteName
 import com.antares.bookingmovie.ui.home.model.MovieModel
 import com.antares.bookingmovie.ui.home.model.nowPlayingMovie
 import com.antares.bookingmovie.ui.home.model.upcoming
@@ -128,7 +129,7 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             NowPlayingMovie { movie ->
-
+                navController.navigate("${AppRouteName.Detail}/${movie.id}")
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -161,7 +162,7 @@ fun UpcomingMovie(){
         items(count = upcoming.size) {index ->
             Box(modifier = Modifier
                 .padding(end = 24.dp)
-                .clickable {  }){
+                .clickable { }){
                 Column(
                     modifier = Modifier.wrapContentHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -308,7 +309,7 @@ fun NowPlayingMovie(
                 .graphicsLayer {
                     val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
                     lerp(
-                        start = ScaleFactor(1f,0.85f),
+                        start = ScaleFactor(1f, 0.85f),
                         stop = ScaleFactor(1.15f, 1f),
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     ).also { scale ->
